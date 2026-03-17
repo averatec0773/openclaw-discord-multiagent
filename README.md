@@ -2,10 +2,11 @@
   <h1>OpenClaw Discord Multi-Agent Setup</h1>
   <p>A production reference for running a self-hosted <a href="https://openclaw.ai">OpenClaw</a> instance with two Discord bots on one gateway — a private assistant and a public-facing agent, each with its own workspace, persona, and permissions.</p>
 
-  <img src="https://img.shields.io/badge/OpenClaw-CC2233?style=flat-square&logoColor=white" />
+  <img src="https://img.shields.io/badge/OpenClaw-CC2233?style=flat-square&logo=openaigym&logoColor=white" />
   <img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Claude_Code-CC785C?style=flat-square&logoColor=white" />
+  <img src="https://img.shields.io/badge/Claude_Code-CC785C?style=flat-square&logo=anthropic&logoColor=white" />
+  <img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=flat-square&logo=chatgpt&logoColor=white" />
   <img src="https://img.shields.io/badge/Hetzner_VPS-D50C2D?style=flat-square&logo=hetzner&logoColor=white" />
 </div>
 
