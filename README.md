@@ -2,12 +2,12 @@
   <h1>OpenClaw Discord Multi-Agent Setup</h1>
   <p>A production reference for running a self-hosted <a href="https://openclaw.ai">OpenClaw</a> instance with two Discord bots on one gateway — a private assistant and a public-facing agent, each with its own workspace, persona, and permissions.</p>
 
-  <img src="https://img.shields.io/badge/OpenClaw-CC2233?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAA80lEQVRYhWNgGAUjHTASUmDFxfufEguOffuM1w4mSgynBsDpOpjPYT747+9AUkgwbjzAiM0cdDD4QoCQz7+t2c/AwMDAwBXiyECMOKGQGDwhAHPh0dwgiMCNh1g1cB68xsDAwMDw3V6LKHE40JBnYGBgYLCevI6BgQEREoMnBP6Xx6OmchwhQDaAhgDc4s6FgyMEWGAMWNzA0wCNAMweGBjwECC5HCDZgiFTDqCDEVMXEARWXLz/KW0T4AMDHgIEW0QwQGooEGoJwcDgDwF4LelqTJLB1rvPMjAwDKc2IQwQKg9g+Z+QOTAweEMAHQzbXDAKAN+acUaL3dFjAAAAAElFTkSuQmCC&logoColor=white" />
-  <img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white" />
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" />
-  <img src="https://img.shields.io/badge/Claude_Code-CC785C?style=flat-square&logo=anthropic&logoColor=white" />
-  <img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=flat-square&logo=openaigym&logoColor=white" />
-  <img src="https://img.shields.io/badge/Hetzner_VPS-D50C2D?style=flat-square&logo=hetzner&logoColor=white" />
+  <a href="https://openclaw.ai"><img src="https://img.shields.io/badge/OpenClaw-CC2233?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAA80lEQVRYhWNgGAUjHTASUmDFxfufEguOffuM1w4mSgynBsDpOpjPYT747+9AUkgwbjzAiM0cdDD4QoCQz7+t2c/AwMDAwBXiyECMOKGQGDwhAHPh0dwgiMCNh1g1cB68xsDAwMDw3V6LKHE40JBnYGBgYLCevI6BgQEREoMnBP6Xx6OmchwhQDaAhgDc4s6FgyMEWGAMWNzA0wCNAMweGBjwECC5HCDZgiFTDqCDEVMXEARWXLz/KW0T4AMDHgIEW0QwQGooEGoJwcDgDwF4LelqTJLB1rvPMjAwDKc2IQwQKg9g+Z+QOTAweEMAHQzbXDAKAN+acUaL3dFjAAAAAElFTkSuQmCC&logoColor=white" /></a>
+  <a href="https://discord.com"><img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=discord&logoColor=white" /></a>
+  <a href="https://www.docker.com"><img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" /></a>
+  <a href="https://claude.ai/code"><img src="https://img.shields.io/badge/Claude_Code-CC785C?style=flat-square&logo=anthropic&logoColor=white" /></a>
+  <a href="https://chatgpt.com"><img src="https://img.shields.io/badge/ChatGPT-74aa9c?style=flat-square&logo=openaigym&logoColor=white" /></a>
+  <a href="https://www.hetzner.com"><img src="https://img.shields.io/badge/Hetzner_VPS-D50C2D?style=flat-square&logo=hetzner&logoColor=white" /></a>
 </div>
 
 ---
