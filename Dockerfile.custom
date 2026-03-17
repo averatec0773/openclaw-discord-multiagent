@@ -1,0 +1,18 @@
+FROM openclaw:latest
+
+USER root
+
+RUN npm install -g clawhub
+RUN apt-get update && apt-get install -y gh && rm -rf /var/lib/apt/lists/*
+
+RUN GOPLACES_URL=$(curl -s https://api.github.com/repos/steipete/goplaces/releases/latest \
+  | grep "browser_download_url.*linux_amd64.tar.gz" | cut -d '"' -f 4) \
+  && curl -L "$GOPLACES_URL" | tar -xz -C /usr/local/bin \
+  && chmod +x /usr/local/bin/goplaces
+
+RUN GOGCLI_URL=$(curl -s https://api.github.com/repos/steipete/gogcli/releases/latest \
+  | grep "browser_download_url.*linux_amd64.tar.gz" | cut -d '"' -f 4) \
+  && curl -L "$GOGCLI_URL" | tar -xz --no-anchored -C /usr/local/bin gog \
+  && chmod +x /usr/local/bin/gog
+
+USER node
