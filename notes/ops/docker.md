@@ -55,14 +55,27 @@ docker compose exec --user root openclaw-gateway \
 
 ## Volume Mapping Reference
 
-| Container path | Host path | Persistent |
-|---|---|---|
-| `/home/node/.openclaw/` | `/root/.openclaw/` | Yes — config, credentials |
-| `/home/node/.openclaw/skills/` | `/root/.openclaw/skills/` | Yes — global skills (all agents) |
-| `/home/node/.openclaw/workspace/` | `/root/.openclaw/workspace/` | Yes — main agent workspace |
-| `/app/skills/` | *(none)* | No — bundled skills, image layer |
+| Container path | Host path | Persistent | Owner |
+|---|---|---|---|
+| `/home/node/.openclaw/` | `/root/.openclaw/` | Yes — config, credentials | `node (1000)` |
+| `/home/node/.openclaw/skills/` | `/root/.openclaw/skills/` | Yes — global skills (all agents) | `root` — clawhub managed |
+| `/home/node/.openclaw/workspace/` | `/root/.openclaw/workspace/` | Yes — main agent workspace | `node (1000)` — agent writable |
+| `/app/skills/` | *(none)* | No — bundled skills, image layer | `root` — read-only |
 
 > `workspace-public/` (public agent) is not mapped in `docker-compose.yml` by default — it sits inside `/root/.openclaw/` which is already mounted as the top-level config volume.
+
+### Workspace Permissions
+
+Both `workspace/` (main) and `workspace-public/` (public) are fully owned by `node (1000)` — agents can read and write all subdirectories including `skills/` and `.git/`.
+
+`skills/` is owned by `root` because `clawhub install` runs as root (`--user root` required). The node user can read skills but not modify them directly.
+
+If workspace ownership gets broken (e.g., by an scp or docker exec as root writing into workspace/), restore with:
+
+```bash
+chown -R 1000:1000 /root/.openclaw/workspace/
+chown -R 1000:1000 /root/.openclaw/workspace-public/
+```
 
 ### Skills loading order (highest → lowest priority)
 

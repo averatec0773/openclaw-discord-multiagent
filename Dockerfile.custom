@@ -1,8 +1,9 @@
-FROM openclaw:latest
+FROM ghcr.io/openclaw/openclaw:latest
 
 USER root
 
 RUN npm install -g clawhub
+# RUN npm install -g @googleworkspace/cli
 RUN apt-get update && apt-get install -y gh && rm -rf /var/lib/apt/lists/*
 
 RUN GOPLACES_URL=$(curl -s https://api.github.com/repos/steipete/goplaces/releases/latest \
