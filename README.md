@@ -97,7 +97,8 @@ openclaw-discord-multiagent/
 │   ├── ops/
 │   │   ├── docker.md        # Image management and container operations
 │   │   ├── ssh.md           # SSH alias, tunnel, file transfer
-│   │   └── updating.md      # Update procedure for Docker-based setup
+│   │   ├── updating.md      # Update procedure for Docker-based setup
+│   │   └── cron.md          # Scheduled agent tasks — job fields, token cost, management
 │   ├── workspace/
 │   │   ├── skills.md        # Skills loading, directory structure, file format
 │   │   ├── installed-skills.md  # Skills installed in this deployment
