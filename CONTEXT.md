@@ -35,6 +35,16 @@ Official docs: https://docs.openclaw.ai
 | `openclaw:latest` | Upstream image from Docker Hub |
 | `openclaw:<your-tag>-custom` | Custom image built on top via `Dockerfile.custom` |
 
+### Checking installed versions
+
+```bash
+# OpenClaw version
+docker exec openclaw-gateway openclaw --version
+
+# Base image creation date
+docker inspect ghcr.io/openclaw/openclaw:latest --format '{{.Created}}'
+```
+
 `Dockerfile.custom` adds tools on top of the upstream image. The custom image name is controlled by `OPENCLAW_IMAGE=openclaw:<your-tag>-custom` in `~/openclaw/.env` on the server.
 The `.env` is gitignored by the upstream repo — upstream `git pull` will never overwrite it.
 
