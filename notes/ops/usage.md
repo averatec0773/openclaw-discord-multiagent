@@ -10,10 +10,13 @@ This mirrors what the dashboard's Usage page shows.
 Each agent has its own session directory:
 
 ```
-/root/.openclaw/agents/<agentId>/sessions/
+/root/.openclaw/agents/<agentId>/sessions/     ← host path (SSH / Claude Code)
+/home/node/.openclaw/agents/<agentId>/sessions/ ← container path (agent's own tools)
 ├── sessions.json          # index: session metadata and state
 └── <session-uuid>.jsonl   # one file per session, line-delimited JSON
 ```
+
+The agent itself uses the container path. External tools (SSH, Claude Code) use the host path.
 
 Usage data lives inside the JSONL files, in `message.usage` on each assistant turn.
 
