@@ -155,3 +155,17 @@ Removed from our AGENTS.md vs official template:
 | Long HEARTBEAT.md | Token burn on every poll | Keep minimal |
 | Vague response style ("concise when needed") | LLM defaults to verbose | Add explicit rules in SOUL.md |
 | Keeping unused template sections in AGENTS.md | Wasted tokens per session | Remove inapplicable sections (TTS, WhatsApp, Twitter) |
+
+---
+
+## Capability isolation via separate workspaces
+
+Each agent reads only its own workspace. TOOLS.md content in `workspace/` is invisible to the `public` agent, which reads only `workspace-public/TOOLS.md`. This creates natural capability separation without extra config.
+
+| Capability | `workspace/` (main) | `workspace-public/` (public) |
+|---|---|---|
+| Usage analysis (session JSONL) | ✓ | — |
+| Google / Gmail (gog) | ✓ | — |
+| Owner Discord user ID + timezone | ✓ | ✓ (bot-specific only) |
+
+Rule: to restrict a capability to main only, add it to `workspace/TOOLS.md` and omit it from `workspace-public/TOOLS.md`.

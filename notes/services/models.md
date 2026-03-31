@@ -59,11 +59,11 @@ To switch models, update `primary` in `openclaw.json` — **hot reloads automati
 
 **Env var:** `OPENAI_API_KEY` in `openclaw.json` → `env` section
 
-| Model ID | Notes |
-|---|---|
-| `openai/gpt-5-mini` | Current default — fast, cheap |
-| `openai/gpt-5.4` | More capable |
-| `openai/gpt-5.4-pro` | Most capable OpenAI model |
+| Model ID | Context window | Notes |
+|---|---|---|
+| `openai/gpt-5-mini` | ~128k | Fast, cheap — used for public agent |
+| `openai/gpt-5.4` | **272k** | Current primary — strong reasoning |
+| `openai/gpt-5.4-pro` | 272k+ | Most capable OpenAI model |
 
 **Special features:**
 - WebSocket transport with warm-up (lower latency)

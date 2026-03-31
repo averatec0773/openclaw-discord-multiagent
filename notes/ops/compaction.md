@@ -6,6 +6,19 @@ Reference: https://docs.openclaw.ai/concepts/compaction
 
 ---
 
+## Context window and the 272k threshold
+
+The context window is the maximum tokens a model can process in a single request. For GPT-5.4 this is **272k tokens**. All session content — system context, conversation history, and the new message — must fit within this limit.
+
+OpenClaw shows the current usage after compaction:
+```
+⚙️ Compacted (190k → 22k) • Context 22k/272k (8%)
+```
+
+This means: history was compressed from 190k to 22k, now using 8% of the 272k window. Compaction triggers automatically as the session approaches the limit, or can be run manually with `/compact`.
+
+---
+
 ## Why it matters
 
 Each conversation turn includes the full session history as input tokens. Without compaction, context grows unboundedly — a session that starts at 12K tokens/turn can reach 190K+ tokens/turn after weeks of daily use, with cost per turn increasing ~85x.
