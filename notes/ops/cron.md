@@ -88,6 +88,44 @@ Not recommended — the scheduler reads this file at runtime. Edits while the co
 
 ---
 
+## Delivery mechanism — WebSocket vs REST API
+
+OpenClaw's `delivery` field sends the agent's **text response** via the Discord Gateway (WebSocket connection). This creates a dependency on the socket being alive and healthy.
+
+**Known failure mode:** After a Docker rebuild or during a `stale-socket` health-monitor restart window, the WebSocket may not have fully re-established its channel cache. A cron job that fires in this window will fail with `Error: Unknown Channel` even though the Discord bot token and target are correct.
+
+**Recommended pattern for DM delivery:**
+
+Instead of relying on `delivery`, have the agent send the message directly via the `discord` tool, which uses the Discord REST API and is unaffected by WebSocket state:
+
+1. Include the send instruction in `payload.message`:
+   ```
+   Send the result as a DM using the discord tool:
+   { "action": "sendMessage", "to": "user:<YOUR_DISCORD_USER_ID>" }
+   If the first attempt fails, retry once. Do not attempt more than 2 times.
+   Reply with just "done" or "failed".
+   ```
+
+2. Omit the `delivery` field entirely — the agent's "done"/"failed" response is then discarded rather than delivered anywhere.
+
+This pattern is rebuild-safe: it has no WebSocket dependency, no delivery target to go stale, and includes an internal retry at no extra token cost.
+
+---
+
+## Post-rebuild checklist
+
+After `docker compose up -d` with a new image:
+
+```
+1. openclaw cron list                        — confirm jobs exist and are enabled
+2. openclaw cron run <job-id>                — manual trigger to verify delivery
+3. Check: lastRunStatus: ok, lastDeliveryStatus: delivered (or no delivery field)
+```
+
+If using the recommended REST API pattern above, no additional warmup (e.g. sending a DM to refresh last route) is needed.
+
+---
+
 ## Example: daily morning summary
 
 ```json

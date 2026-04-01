@@ -15,6 +15,7 @@
 These files are edited locally and committed — no server read needed:
 
 - `notes/channels/discord.md`
+- `notes/ops/cron.md`
 - `notes/ops/docker.md`
 - `notes/ops/ssh.md`
 - `notes/ops/updating.md`
