@@ -1,13 +1,15 @@
 {
   "meta": {
-    "lastTouchedVersion": "2026.3.11"
+    "lastTouchedVersion": "2026.4.11"
   },
   "env": {
     "OPENAI_API_KEY": "<YOUR_OPENAI_API_KEY>",
     "ANTHROPIC_API_KEY": "<YOUR_ANTHROPIC_API_KEY>",
     "TAVILY_API_KEY": "<YOUR_TAVILY_API_KEY>",
+    "FISH_AUDIO_API_KEY": "<YOUR_FISH_AUDIO_API_KEY>",
     "DISCORD_PRIVATE_BOT_TOKEN": "<YOUR_PRIVATE_BOT_TOKEN>",
     "DISCORD_PUBLIC_BOT_TOKEN": "<YOUR_PUBLIC_BOT_TOKEN>",
+    "DISCORD_ROLEPLAY_BOT_TOKEN": "<YOUR_ROLEPLAY_BOT_TOKEN>",
     "GITHUB_TOKEN": "<YOUR_GITHUB_PAT>",
     "TZ": "America/New_York"
   },
@@ -17,7 +19,15 @@
         "primary": "openai/gpt-5.4"
       },
       "compaction": {
-        "model": "openai/gpt-5.4"
+        "model": "openai/gpt-5.4",
+        "mode": "safeguard"
+      },
+      "contextPruning": {
+        "mode": "cache-ttl",
+        "ttl": "1h"
+      },
+      "heartbeat": {
+        "every": "30m"
       }
     },
     "list": [
@@ -35,23 +45,23 @@
         "tools": {
           "deny": ["exec", "bash", "computer"]
         }
+      },
+      {
+        "id": "roleplay01",
+        "workspace": "/home/node/.openclaw/workspace-roleplay01"
       }
     ]
   },
   "bindings": [
-    { "agentId": "main",   "match": { "channel": "discord", "accountId": "default" } },
-    { "agentId": "public", "match": { "channel": "discord", "accountId": "public" } }
+    { "agentId": "main",       "match": { "channel": "discord", "accountId": "default" } },
+    { "agentId": "public",     "match": { "channel": "discord", "accountId": "public" } },
+    { "agentId": "roleplay01", "match": { "channel": "discord", "accountId": "roleplay" } }
   ],
   "commands": {
     "native": "auto",
     "nativeSkills": "auto",
     "restart": true,
     "ownerDisplay": "raw"
-  },
-  "skills": {
-    "load": {
-      "extraDirs": ["/home/node/.openclaw/skills"]
-    }
   },
   "channels": {
     "discord": {
@@ -60,7 +70,7 @@
         "default": {
           "token": "$DISCORD_PRIVATE_BOT_TOKEN",
           "groupPolicy": "allowlist",
-          "streaming": "partial",
+          "streaming": { "mode": "partial" },
           "guilds": {
             "<YOUR_GUILD_ID>": {
               "requireMention": true,
@@ -71,9 +81,20 @@
         "public": {
           "token": "$DISCORD_PUBLIC_BOT_TOKEN",
           "groupPolicy": "allowlist",
-          "streaming": "partial",
+          "streaming": { "mode": "partial" },
           "guilds": {
             "<YOUR_GUILD_ID>": { "requireMention": true }
+          }
+        },
+        "roleplay": {
+          "token": "$DISCORD_ROLEPLAY_BOT_TOKEN",
+          "groupPolicy": "allowlist",
+          "streaming": { "mode": "partial" },
+          "guilds": {
+            "<YOUR_GUILD_ID>": {
+              "requireMention": true,
+              "users": ["<YOUR_DISCORD_USER_ID>"]
+            }
           }
         }
       }
@@ -82,6 +103,37 @@
   "gateway": {
     "controlUi": {
       "dangerouslyAllowHostHeaderOriginFallback": true
+    }
+  },
+  "skills": {
+    "load": {
+      "extraDirs": ["/home/node/.openclaw/skills"]
+    }
+  },
+  "plugins": {
+    "entries": {
+      "openai": {
+        "enabled": true
+      },
+      "fish-audio": {
+        "enabled": true,
+        "config": {
+          "voiceId": "<YOUR_FISH_AUDIO_VOICE_ID>"
+        }
+      }
+    }
+  },
+  "messages": {
+    "tts": {
+      "provider": "fish-audio",
+      "auto": "tagged",
+      "providers": {
+        "fish-audio": {
+          "voiceId": "<YOUR_FISH_AUDIO_VOICE_ID>",
+          "model": "s2-pro",
+          "speed": 1.0
+        }
+      }
     }
   }
 }

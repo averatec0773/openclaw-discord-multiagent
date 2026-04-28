@@ -5,16 +5,16 @@
 
 ## Google (gog)
 
-- Default account: YOUR_EMAIL@gmail.com (set via GOG_ACCOUNT env var)
+- Default account: ayetek0773@gmail.com (set via GOG_ACCOUNT env var)
 - No --account flag needed — gog picks it up automatically
-- Gmail, Calendar, Drive enabled
+- Gmail, Calendar, Drive, Contacts all enabled
 
 ## Discord
 
-- Bot guild: YOUR_GUILD_NAME (GUILD_ID)
-- Owner Discord user ID: YOUR_USER_ID
-- Owner timezone: YOUR_TIMEZONE
-  Always show local time, not UTC.
+- Bot guild: AVERATEC-WORKPLACE (1480722310704009346)
+- Owner Discord user ID: 360785034438901761
+- Owner timezone: America/New_York (Boston, EST UTC-5 / EDT UTC-4)
+  Always show Boston local time, not UTC.
 
 ## Usage Analysis
 

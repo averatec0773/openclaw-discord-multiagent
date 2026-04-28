@@ -72,10 +72,8 @@ A set of `.claude/skills/` that turn Claude Code into an AI-assisted management 
 
 | Skill | Purpose |
 |---|---|
-| `session` | Session startup: load context, read skills, establish language rules |
-| `sync` | Sync server workspace files to repo; conflict detection before any write |
-| `edit` | Safe modification protocol for server and repo files |
-| `self-improve` | Record learnings; propose structural improvements to repo and server |
+| `setup` | Step-by-step VPS deployment SOP — Docker, config, workspace, skills, TTS |
+| `sync` | Config backup workflow — copy server-side changes back to repo |
 
 ### Operations runbooks
 Step-by-step guides for Docker image management, SSH tunnel setup, updating OpenClaw, and skill installation — all documented from real operational experience.
@@ -86,53 +84,34 @@ Step-by-step guides for Docker image management, SSH tunnel setup, updating Open
 
 ```
 openclaw-discord-multiagent/
-├── CONTEXT.md               # Full environment reference — paths, config, current state
+├── CLAUDE.md                # Agent entry point — quick start, key files, container commands
 ├── Dockerfile.custom        # Custom image definition (extend openclaw:latest)
 ├── docker-compose.yml       # Container configuration
+├── Makefile                 # Common project commands
+├── .env.example             # Environment variable reference
 ├── config/
-│   └── openclaw.json        # Config template (all secrets redacted)
-├── installation/
-│   └── setup.md             # Deployment guide — VPS, Docker, initial setup
-├── notes/
-│   ├── ops/
-│   │   ├── docker.md        # Image management and container operations
-│   │   ├── ssh.md           # SSH alias, tunnel, file transfer
-│   │   ├── updating.md      # Update procedure for Docker-based setup
-│   │   ├── cron.md          # Scheduled agent tasks — job fields, token cost, management
-│   │   ├── compaction.md    # Context compaction — config, manual trigger, cost monitoring
-│   │   └── usage.md         # Token usage analysis — reading JSONL, cost breakdown scripts
-│   ├── workspace/
-│   │   ├── skills.md        # Skills loading, directory structure, file format
-│   │   ├── installed-skills.md  # Skills installed in this deployment
-│   │   └── workspace-files.md   # Workspace file usage rules
-│   ├── channels/
-│   │   └── discord.md       # Discord channel config reference
-│   ├── services/
-│   │   └── models.md        # LLM provider and model reference
-│   └── clawhub.md           # ClawHub CLI reference
+│   └── openclaw.json        # Config template (all secrets redacted as <YOUR_...>)
 ├── templates/
 │   ├── AGENTS.md            # Main agent behavioral rules template
 │   ├── AGENTS.public.md     # Public agent behavioral rules template
 │   ├── SOUL.md              # Private agent persona template
 │   ├── SOUL.public.md       # Public agent persona template
-│   ├── TOOLS.md             # Environment-specific tools template
+│   ├── TOOLS.md             # Environment-specific config template (main)
+│   ├── TOOLS.public.md      # Environment-specific config template (public)
 │   └── USER.md              # User profile template
-└── .claude/skills/          # Claude Code skills for managing this instance
-    ├── session/             # Session startup and context loading
-    ├── sync/                # Server ↔ repo sync with conflict detection
-    ├── edit/                # Safe file modification protocol
-    └── self-improve/        # Learning capture and structural improvement
+└── .claude/skills/          # Claude Code skills for AI-assisted management
+    ├── setup/               # VPS deployment SOP with step-by-step instructions
+    └── sync/                # Config backup workflow — server → repo
 ```
 
 ---
 
 ## Getting started
 
-1. Read [CONTEXT.md](CONTEXT.md) for the full environment reference
-2. Follow [installation/setup.md](installation/setup.md) for deployment steps
-3. Copy `config/openclaw.json` to your server and fill in your keys
-4. Copy the `templates/` files to your agent workspace and customize them
-5. If using Claude Code to manage your instance, load `.claude/skills/` into your project
+1. Read [CLAUDE.md](CLAUDE.md) for infrastructure overview and key files
+2. Follow [.claude/skills/setup/SKILL.md](.claude/skills/setup/SKILL.md) for the full deployment SOP
+3. Fill in your keys — replace all `<YOUR_...>` in `config/openclaw.json`
+4. Push `templates/` files to your agent workspaces and customize them
 
 ---
 

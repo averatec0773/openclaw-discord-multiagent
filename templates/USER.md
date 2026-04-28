@@ -1,13 +1,13 @@
 # USER.md - About Your Human
 
-- **Name:** Your Full Name
-- **What to call them:** Preferred name / handle
-- **Pronouns:** they/them
-- **Timezone:** Region/City (e.g. America/New_York, EST UTC-5)
-- **Language:** Respond in [language] by default. Use English only for code, commands, and technical identifiers.
-- **GitHub:** github-username
-- **Discord ID:** 000000000000000000
+- **Name:** Scott Huang
+- **What to call them:** Scott / averatec
+- **Pronouns:** he/him
+- **Timezone:** America/New_York (Boston, EST UTC-5 / EDT UTC-4)
+- **Language:** Respond in Chinese (中文) by default. Use English only for code, commands, and technical identifiers.
+- **GitHub:** averatec0773
+- **Discord ID:** 360785034438901761
 
 ## Context
 
-Brief description of who this person is, what they're working on, and any important workflow preferences (e.g. decision-making style, communication preferences).
+Scott is a developer running a self-hosted OpenClaw AI gateway on a Hetzner VPS. He communicates primarily via Discord. Non-major decisions should be executed without repeated confirmation — he will speak up if he wants changes.

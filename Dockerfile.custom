@@ -4,7 +4,7 @@ USER root
 
 RUN npm install -g clawhub
 # RUN npm install -g @googleworkspace/cli
-RUN apt-get update && apt-get install -y gh && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y gh ffmpeg && rm -rf /var/lib/apt/lists/*
 
 RUN GOPLACES_URL=$(curl -s https://api.github.com/repos/steipete/goplaces/releases/latest \
   | grep "browser_download_url.*linux_amd64.tar.gz" | cut -d '"' -f 4) \

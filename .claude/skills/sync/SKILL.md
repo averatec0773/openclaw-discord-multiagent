@@ -1,123 +1,100 @@
 ---
 name: sync
-description: Use when updating the averatec-openclaw repo after server changes, or syncing server workspace files back to repo. Also invoke proactively before any operation that will write to repo files OR server workspace files. Triggered by "update repo", "sync docs", "同步", "更新 repo".
-user-invocable: true
+description: Sync changes from this private repo (averatec-openclaw) to the public reference repo (openclaw-discord-multiagent). Run after committing to private when any file in references/file-map.md changed. Direction is always private → public only.
+metadata:
+  version: 1.0.0
+  category: workflow
+  dangerous: false
 ---
 
-# averatec-openclaw Repo Sync
+# Sync — Private to Public Repo
 
-Consult [file-map.md](file-map.md) for the complete server-to-repo mapping table and redaction rules.
+Direction is always **private → public**. Never edit shared files directly in the public repo.
 
----
+## When to use
 
-## Proactive Gate Rule
+After committing to this repo when any file listed in `references/file-map.md` (Sync Map section) changed. Check the last `pub-sync-*` tag to find what's new.
 
-Run this skill before any operation that will write to repo files or server workspace files.
-The conflict check must complete before any write proceeds.
+## Prerequisites
 
----
+| Repo | Local path | Remote |
+|---|---|---|
+| Private (source) | `/Users/averatec/CODING/github/averatec-openclaw` | `averatec0773/averatec-openclaw` |
+| Public (target) | `/Users/averatec/CODING/github/openclaw-discord-multiagent` | `averatec0773/openclaw-discord-multiagent` |
 
-## Step 0 — Conflict Detection
+Both repos must be up to date (`git fetch` in each before starting).
 
-For each file pair relevant to the current operation, read both sides and compare:
+## Steps
+
+### 1 — Find what changed since last sync
 
 ```bash
-ssh openclaw "cat <server-path>"   # server version
-# compare with local repo file
+git tag --sort=-creatordate | grep pub-sync | head -1       # e.g. pub-sync-20260401
+git diff pub-sync-<date>..HEAD --name-only                  # files changed since then
 ```
 
-| Result | Action |
-|---|---|
-| Only server changed | Proceed: server -> repo |
-| Only repo changed | Describe changes, ask user whether to push to server |
-| Both sides changed | STOP — show conflict summary and ask user to choose |
-| Both identical | Skip |
+Filter output against the Sync Map in `references/file-map.md`.
 
-When both sides have changed, present the following and wait for user input before proceeding:
+### 2 — Apply structural cleanup (if this is a major sync)
 
-```
-CONFLICT: <filename>
-
-Server: <what changed>
-Repo:   <what changed>
-
-Choose:
-  A  Update repo from server (server -> repo)
-  B  Update server from repo (confirm no server content will be lost first)
-  C  Skip this file
-  D  Show full diff
-```
-
-Do not overwrite either side without explicit user confirmation.
-
----
-
-## Step 1 — Identify What Changed
-
-Categorize affected files based on Step 0:
-
-| Changed | Action |
-|---|---|
-| `workspace/AGENTS.md` | Update `templates/AGENTS.md` |
-| `workspace/SOUL.md` | Update `templates/SOUL.md` |
-| `workspace-public/AGENTS.md` | Update `templates/AGENTS.public.md` |
-| `openclaw.json` | Update `config/openclaw.json` with redaction applied |
-| New skill in `skills/` | Update `notes/workspace/installed-skills.md` and `CONTEXT.md` |
-| Discord config changed | Update `notes/channels/discord.md` and `CONTEXT.md` Active Channels |
-| Local doc-only edit | Skip server step, go straight to commit |
-
-If unsure which files changed, ask — do not update everything blindly.
-
----
-
-## Step 2 — Update Repo Files
-
-Update only the files identified in Step 1.
-
-For `config/openclaw.json`: apply redaction rules from [file-map.md](file-map.md) before writing.
-
-For skill tables (`notes/workspace/installed-skills.md`, `CONTEXT.md`): both files contain the same skill table and must stay in sync.
-
----
-
-## Step 3 — Update Cross-References Before Committing
-
-Before staging any commit, check whether the changes require updates to other files.
-
-**For every file being changed, verify:**
-
-| If you changed... | Also check and update if needed |
-|---|---|
-| Any file path or directory structure | `README.md` directory tree, `CONTEXT.md` links, `session/SKILL.md` file list |
-| A file listed in `CONTEXT.md` | The specific section that references it |
-| `notes/workspace/installed-skills.md` skill list | `CONTEXT.md` Installed Skills table |
-| `notes/channels/discord.md` | `CONTEXT.md` Active Channels section |
-| `config/openclaw.json` key settings | `CONTEXT.md` OpenClaw Configuration section |
-| A `.claude/skills/*/SKILL.md` | `session/SKILL.md` skill list |
-| `templates/AGENTS.md` or `SOUL.md` | No cross-reference needed (templates are standalone) |
-
-Update all affected cross-references **before** staging the commit so everything lands in a single coherent commit.
-
----
-
-## Step 4 — Commit and Push
-
-Stage only the files actually changed (including cross-reference updates from Step 3):
+If the private repo underwent structural reorganization (new directories, deleted directories), first delete stale paths from the public repo listed in the Structural Cleanup table in `references/file-map.md`:
 
 ```bash
-git add <specific files>
-git commit -m "<type>: <clear description of what changed and why>"
+cd /Users/averatec/CODING/github/openclaw-discord-multiagent
+rm -rf <stale path>
+```
+
+Skip this step for routine file-level changes.
+
+### 3 — Copy changed files to public repo
+
+```bash
+PRIV="/Users/averatec/CODING/github/averatec-openclaw"
+PUB="/Users/averatec/CODING/github/openclaw-discord-multiagent"
+cp "$PRIV/<file>" "$PUB/<file>"
+```
+
+Copy only files that actually changed. Apply redaction rules from `references/file-map.md` before copying `config/openclaw.json`.
+
+### 4 — Update public-specific files if needed
+
+| If this changed in private... | Also review in public repo |
+|---|---|
+| File or directory structure | `README.md` paths, `CLAUDE.md` links |
+| Skill added or modified | Public `CLAUDE.md` skill list |
+| `config/openclaw.json` structure | Public `CLAUDE.md` config section |
+
+Edit public-specific files (README, CLAUDE.md) directly in the public repo — they are intentionally different from private.
+
+### 5 — Commit and push public repo
+
+```bash
+cd /Users/averatec/CODING/github/openclaw-discord-multiagent
+git add <specific changed files>
+git commit -m "<type>: <description>"
 git push origin main
 ```
 
-**Commit message rules:**
-- Use conventional commit prefixes: `docs:`, `feat:`, `fix:`, `refactor:`
-- Describe **what changed**, not just which files were touched
-- If multiple files were updated for the same reason, name the reason — e.g., `docs: restructure notes/ into ops/workspace/channels/services subdirectories`
-- If cross-reference files were updated alongside a main change, include both in the description — e.g., `docs: update AGENTS.md startup sequence; sync README and CONTEXT references`
+No `Co-Authored-By` in commits — public repo is single-authored.
 
----
+### 5 — Tag sync point in private repo
 
-## What Never Goes into the Repo
+```bash
+cd /Users/averatec/CODING/github/averatec-openclaw
+git tag pub-sync-$(date +%Y%m%d)
+git push origin --tags
+```
 
-See [file-map.md](file-map.md) — Never sync section.
+The tag marks exactly which private commit was last synced. Required for Step 1 of the next run.
+
+## DO NOT
+
+- Do not sync files in the Never Sync list in `references/file-map.md` — they contain personal content.
+- Do not bulk-copy with `cp -r` — copy only files that changed.
+- Do not push to public before tagging the sync point in private.
+
+## Acceptance Criteria
+
+- [ ] Public repo commit pushed and visible on GitHub
+- [ ] `pub-sync-<date>` tag exists in private repo and pushed to remote
+- [ ] `git diff pub-sync-<new-tag>..HEAD --name-only` returns only non-syncable files

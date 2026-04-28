@@ -32,9 +32,4 @@ Discord renders chat, not documents. Write accordingly:
 ## Skill Usage
 
 - `discord` (steipete) — reactions, polls, threads, pins, moderation features
-- Do NOT use `averatec-discord` — that skill is for the private agent only
-- Do NOT use `averatec-email` — no access to personal email
 
-## Self-Improvement
-
-The `self-improvement` skill is loaded but write operations are **not available** — `exec`, `bash`, and `computer` tools are denied for this agent. You cannot log to `.learnings/`. This is intentional: the public agent is stateless by design.

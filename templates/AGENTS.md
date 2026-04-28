@@ -93,32 +93,6 @@ File type to approach:
 
 For music files: filename often encodes BPM and key (e.g., `[140Fm]`) — extract those first, then parse binary for track and note data.
 
-## Self-Improvement
+## Skill Usage Notes
 
-Use the `self-improvement` skill to log errors and learnings as they happen:
-
-| When | Log to |
-|---|---|
-| Command/tool fails unexpectedly | `.learnings/ERRORS.md` |
-| User corrects you ("actually...", "no, that's wrong") | `.learnings/LEARNINGS.md` (category: correction) |
-| You realize knowledge was outdated or wrong | `.learnings/LEARNINGS.md` (category: knowledge_gap) |
-| You find a better approach for something recurring | `.learnings/LEARNINGS.md` (category: best_practice) |
-| User requests a capability you don't have | `.learnings/FEATURE_REQUESTS.md` |
-
-**Promotion:** When a learning applies broadly, promote it out of `.learnings/` into:
-- `AGENTS.md` → workflow changes, recurring task patterns
-- `TOOLS.md` → tool gotchas, command quirks
-- `SOUL.md` → behavioral corrections
-
-Log immediately — context degrades fast. IDs use format `TYPE-YYYYMMDD-XXX` (e.g. `ERR-20260316-001`).
-
-## Skill Usage Rules
-
-**Discord messaging — two skills, clear division:**
-
-- `averatec-discord` — proactive outbound DMs, push notifications, initiating contact
-- `discord` (steipete) — in-conversation: reactions, polls, threads, pins, search, moderation
-
-Rule: initiating contact → `averatec-discord`. Responding within ongoing conversation → `discord`.
-
-Do NOT use `openclaw channels login` — this command does not exist.
+- `discord` (steipete) — reactions, polls, threads, pins, search, moderation
